@@ -1,6 +1,6 @@
-# Quantum Mechanics & Functional Analysis Notes 🧠
+# Quantum Mechanics & Functional Analysis Notes
 
-This repository contains a collection of notes, explanations, publically available articles and Q&A on the mathematical foundations of quantum mechanics. The content is structured as a series of articles, each provided as both a LaTeX (`.tex`) source file and a compiled PDF.
+This repository contains a collection of notes, explanations, publicly available articles and Q&A on the mathematical foundations of quantum mechanics. The content is structured as a series of articles, each provided as both a LaTeX (`.tex`) source file and a compiled PDF.
 
 ---
 ## Disclaimer & AI Attribution
