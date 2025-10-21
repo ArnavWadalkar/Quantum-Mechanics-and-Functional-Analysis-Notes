@@ -1,0 +1,153 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{physics}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{bm}
+\geometry{margin=1in}
+
+\title{\textbf{Orthogonal Polynomials and the Gram--Schmidt Construction}}
+\author{A ChatGPT compilation}
+\date{}
+
+\begin{document}
+\maketitle
+% ===============================
+\section*{1. Functional Analytic Background}
+% ===============================
+
+In quantum mechanics and mathematical physics, we often work within an inner product space of functions.
+A particularly important example is the weighted $L^2$ space:
+\[
+L^2_w(a,b) = \left\{ f:(a,b)\to\mathbb{R} \, \Big| \,
+\int_a^b |f(x)|^2 w(x)\, dx < \infty \right\},
+\]
+where $w(x) > 0$ is a given \emph{weight function} on $(a,b)$.
+
+\subsection*{Inner Product and Orthogonality}
+
+The inner product between two functions $f$ and $g$ in $L^2_w(a,b)$ is defined by
+\[
+\langle f, g \rangle = \int_a^b f(x)\, g(x)\, w(x)\, dx.
+\]
+Two functions are said to be \emph{orthogonal} if $\langle f, g \rangle = 0$.
+If, in addition, $\langle f, f \rangle = 1$, then $f$ is said to be \emph{normalized}.
+A collection of orthonormal functions $\{\phi_n(x)\}$ satisfies
+\[
+\langle \phi_m, \phi_n \rangle = \delta_{mn}.
+\]
+Such systems form the backbone of quantum mechanics:
+wavefunctions (or eigenfunctions) of Hermitian operators are orthogonal under an appropriate weight $w(x)$.
+
+\subsection*{Motivation for Orthogonal Polynomials}
+
+The space of polynomials on $(a,b)$ is infinite-dimensional and can be turned into a Hilbert space by introducing an inner product with a suitable weight function.
+An \emph{orthogonal polynomial system} $\{p_n(x)\}$ is one that satisfies
+\[
+\int_a^b p_n(x)\, p_m(x)\, w(x)\, dx = 0, \qquad n \neq m.
+\]
+These families --- such as Legendre, Hermite, and Laguerre polynomials --- arise naturally as eigenfunctions of self-adjoint differential operators in Sturm--Liouville form,
+and therefore also form a complete basis for $L^2_w(a,b)$.
+
+\newpage
+% ===============================
+\section*{2. The Gram--Schmidt Orthogonalization Process}
+% ===============================
+
+\subsection*{Idea of the Method}
+
+Suppose we start with the sequence of linearly independent monomials:
+\[
+f_0(x) = 1, \quad f_1(x) = x, \quad f_2(x) = x^2, \quad \dots
+\]
+and we wish to generate an orthogonal set $\{\phi_n(x)\}$ with respect to some weight $w(x)$ on $(a,b)$.
+
+The Gram--Schmidt process constructs each $\phi_n$ recursively as:
+\[
+\phi_0 = f_0, \qquad
+\phi_k = f_k - \sum_{j=0}^{k-1} 
+\frac{\langle f_k, \phi_j \rangle}{\langle \phi_j, \phi_j \rangle}\, \phi_j.
+\]
+This guarantees orthogonality:
+\[
+\langle \phi_i, \phi_j \rangle = 0 \quad \text{for all } i \neq j.
+\]
+If we further normalize each $\phi_n$ by dividing by its norm, we obtain an orthonormal set.
+
+\subsection*{Worked Example: Constructing Legendre Polynomials}
+
+Let us apply the Gram--Schmidt procedure to the monomials $1, x, x^2, \dots$ on the interval $[-1,1]$ with the weight $w(x)=1$.
+We define the inner product as
+\[
+\langle f,g \rangle = \int_{-1}^{1} f(x) g(x)\, dx.
+\]
+
+\paragraph{Step 1:} Start with \( f_0(x) = 1 \).
+\[
+\phi_0(x) = 1, \quad
+\langle \phi_0, \phi_0 \rangle = \int_{-1}^1 1 \, dx = 2.
+\]
+Normalized form:
+\[
+P_0(x) = \frac{\phi_0}{\sqrt{2}} = \frac{1}{\sqrt{2}}.
+\]
+
+\paragraph{Step 2:} Next, \( f_1(x) = x \).
+Subtract its projection on $\phi_0$:
+\[
+\langle f_1, \phi_0 \rangle = \int_{-1}^1 x\, dx = 0.
+\]
+So $\phi_1 = f_1 = x$.
+Then
+\[
+\langle \phi_1, \phi_1 \rangle = \int_{-1}^1 x^2\, dx = \frac{2}{3}.
+\]
+Normalized:
+\[
+P_1(x) = \sqrt{\frac{3}{2}}\, x.
+\]
+
+\paragraph{Step 3:} Now \( f_2(x) = x^2 \).
+Subtract projections on $\phi_0$ and $\phi_1$:
+\[
+\phi_2 = f_2 - 
+\frac{\langle f_2, \phi_0 \rangle}{\langle \phi_0, \phi_0 \rangle}\phi_0
+- \frac{\langle f_2, \phi_1 \rangle}{\langle \phi_1, \phi_1 \rangle}\phi_1.
+\]
+Compute:
+\[
+\langle f_2, \phi_0 \rangle = \int_{-1}^1 x^2\, dx = \frac{2}{3}, \quad
+\langle f_2, \phi_1 \rangle = \int_{-1}^1 x^3\, dx = 0.
+\]
+Thus
+\[
+\phi_2 = x^2 - \frac{1}{3}.
+\]
+Normalize:
+\[
+\langle \phi_2, \phi_2 \rangle
+= \int_{-1}^1 (x^2 - \tfrac{1}{3})^2 dx
+= \frac{8}{45}, \quad
+P_2(x) = \frac{3}{2\sqrt{2}} (x^2 - \tfrac{1}{3})
+= \frac{1}{2}(3x^2 - 1).
+\]
+
+\paragraph{Observation.} 
+The resulting $P_0$, $P_1$, and $P_2$ are the first three \textbf{Legendre polynomials}.
+Thus, Gram--Schmidt applied to $\{1, x, x^2, \dots\}$ with $w(x)=1$ automatically generates the Legendre family.
+
+\subsection*{Functional--Analytic Interpretation}
+
+This process is equivalent to constructing an orthogonal basis in $L^2[-1,1]$.
+Each resulting polynomial $P_n(x)$ is an eigenfunction of a self-adjoint differential operator
+\[
+\mathcal{L} = \dv{}{x}\!\left[(1-x^2)\dv{}{x}\right].
+\]
+That is,
+\[
+\mathcal{L} P_n(x) + n(n+1) P_n(x) = 0.
+\]
+Hence, Gram--Schmidt gives not only orthogonal functions but also the eigenbasis of $\mathcal{L}$,
+showing the deep connection between orthogonalization and operator theory.
+
+\end{document}
